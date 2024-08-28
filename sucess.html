@@ -1,0 +1,236 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        @import url("https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap");
+        @import url("https://fonts.googleapis.com/css2?family=Roboto+Condensed&display=swap");
+
+        :root {
+            --dark-slate-grey: hsl(234, 29%, 20%);
+            --charcoal-grey: hsl(235, 18%, 26%);
+            --grey: hsl(231, 7%, 60%);
+            --tomato: hsl(4, 100%, 67%);
+            --white: hsl(0, 0%, 100%);
+        }
+
+        body {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            font-family: "Roboto", sans-serif;
+            font-size: 1rem;
+            background-color: var(--white);
+        }
+
+        .loader {
+            position: absolute;
+            top: calc(50% - 2.5rem);
+            left: calc(50% - 2.5rem);
+            width: 5rem;
+            height: 5rem;
+            border: 5px solid lightBlue;
+            border-radius: 50%;
+            overflow: hidden;
+            transition: 0.3s;
+            box-shadow: 0rem 0rem 0.6rem rgba(0,0,0,0.3);
+            animation: spin 1s linear infinite;
+        }
+
+        .success {
+            background: lightGreen;
+            border-color: lightGreen;
+        }
+
+        .loader.success::before {
+            height: 7px;
+            width: 2.5rem;
+            position: absolute;
+            top: 65%;
+            left: 44%;
+            background-color: green;
+            transform: rotate(-45deg);
+            transform-origin: 0% 50%;
+            border-radius: 5px;
+            animation: baseGrow 1s;
+            content: '';
+        }
+        
+        .loader.success::after {
+            height: 7px;
+            width: 1.5rem;
+            position: absolute;
+            top: 65%;
+            left: 50%;
+            background-color: green;
+            transform: rotate(-135deg);
+            transform-origin: 0% 50%;
+            border-radius: 5px;
+            animation: tipGrow 1s;
+            content: '';
+        }  
+
+        .loader.success {
+            animation: pop 1.2s ease-in-out;
+        }
+
+        @keyframes spin {
+            0% {
+                transform: rotate(0deg);
+                border-top: 5px solid blue;
+            }
+            100% {
+                transform: rotate(360deg);
+                border-top: 5px solid blue;
+            }
+        }
+
+        @keyframes tipGrow {
+            0% {
+                width: 0px;
+                left: 0;
+                top: 0;
+            }
+            25% {
+                width: 0px;
+                left: 0;
+                top: 0;
+            }
+            50% {
+                top: 0%;
+                left: 0%;
+                width: 0;
+            }
+            75% {
+                top: 0%;
+                left: 0%;
+                width: 0rem;
+            }
+            100% {
+                top: 65%;
+                left: 50%;
+                width: 1.5rem;
+            }
+        }
+
+        @keyframes baseGrow {
+            0% {
+                width: 0;
+            }
+            90% {
+                width: 0;
+            }
+            100% {
+                width: 2.5rem;
+            }
+        }
+
+        @keyframes pop {
+            0% {
+                transform: scale(1);
+            }
+            80% {
+                transform: scale(1);    
+            }
+            100% {
+                transform: scale(1.1);
+            }
+        }
+
+        @keyframes slideIn {
+            0% {
+                transform: translateX(-100%);
+                opacity: 0;
+            }
+            100% {
+                transform: translateX(0);
+                opacity: 1;
+            }
+        }
+
+        .content {
+            display: none;
+            text-align: center;
+            margin-top: 1rem;
+            animation: slideIn 1s forwards;
+        }
+
+        .success__msg__container {
+            display: grid;
+            grid-template-columns: repeat(1, 1fr);
+            gap: 2rem;
+            border-radius: 15px;
+            padding: 15px;
+            box-shadow: 1px 8px 20px 0px #000000;
+            background: white; /* Ensure background for the content */
+        }
+
+        .success__msg__head {
+            font-size: 2.5em;
+            color: var(--dark-slate-grey);
+        }
+
+        .success__note {
+            font-size: 1em;
+            color: var(--charcoal-grey);
+        }
+
+        .dismiss__btn {
+            padding: 0.9rem;
+            background: var(--dark-slate-grey);
+            color: var(--white);
+            font-family: "Roboto", sans-serif;
+            font-weight: 700;
+            outline: none;
+            border: none;
+            border-radius: 0.4rem;
+            cursor: pointer;
+            box-shadow: 1px 2px 5px var(--grey);
+            transition: all 0.5s ease-in-out;
+        }
+
+        .dismiss__btn:hover {
+            background: linear-gradient(0.25turn, #e04313, var(--tomato));
+        }
+    </style>
+</head>
+<body>
+    <span class="loader"></span>
+    <div class="content">
+        <div class="success__msg__container">
+            <img src="./icon-success.svg" alt="" />
+            <h2 class="success__msg__head">
+                Thanks for subscribing!
+            </h2>
+            <p class="success__note">
+                A confirmation email has been sent to
+                <span id="user__email__address"></span>. Please open
+                it and click the button inside to confirm your subscription.
+            </p>
+            <button type="button" title="dismiss" class="dismiss__btn">Dismiss message</button>
+        </div>
+    </div>
+
+    <script>
+        const loader = document.querySelector('.loader');
+        const content = document.querySelector('.content');
+
+        function success() {
+            loader.classList.add('success');
+        }
+
+        function showContent() {
+            loader.style.display = 'none'; // Hide loader
+            content.style.display = 'block'; // Show content
+        }
+
+        setTimeout(() => success(), 2000); // Add success class after 2 seconds
+
+        setTimeout(() => showContent(), 3000); // Hide loader and show content after 3 seconds
+    </script>
+</body>
+</html>

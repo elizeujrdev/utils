@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Multiselect Example</title>
+    <!-- Inclua o CSS do Select2 -->
+    <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
+
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            padding: 20px;
+        }
+
+        .select2-container--default .select2-selection--multiple {
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            padding: 5px;
+        }
+
+        .select2-container--default .select2-selection--multiple .select2-selection__choice {
+            background-color: #d9534f;
+            border: 1px solid #d43f3a;
+            border-radius: 4px;
+            padding: 2px 5px;
+            color: white;
+            font-size: 14px;
+            margin-right: 3px; /* Margem entre os itens */
+        }
+
+        .select2-container--default .select2-selection--multiple .select2-selection__choice__remove {
+            color: white;
+            margin-right: 5px;
+            margin-left: 3px; /* Adiciona espaço entre o texto e o "X" */
+        }
+
+        label {
+            font-size: 16px;
+            margin-bottom: 10px;
+            display: block;
+        }
+    </style>
+</head>
+<body>
+
+    <label for="favorite-colors">What are your favorite colors</label>
+    <select id="favorite-colors" name="colors" multiple="multiple" style="width: 100%">
+        <option value="Green">Green</option>
+        <option value="Yellow">Yellow</option>
+        <option value="Red">Red</option>
+        <option value="Blue">Blue</option>
+    </select>
+
+    <!-- Inclua o jQuery -->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <!-- Inclua o JS do Select2 -->
+    <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
+
+    <script>
+        $(document).ready(function() {
+            $('#favorite-colors').select2({
+                placeholder: "Choose an option",
+                closeOnSelect: false // Evita o fechamento do dropdown ao selecionar
+            });
+
+            // Listener para capturar a seleção e remover a opção do dropdown
+            $('#favorite-colors').on('select2:select', function(e) {
+                var data = e.params.data;
+                $(this).find('option[value="' + data.id + '"]').prop('disabled', true); // Desabilita a opção no dropdown
+                $(this).trigger('change.select2'); // Atualiza o select2
+            });
+
+            // Listener para reexibir a opção no dropdown ao remover da barra
+            $('#favorite-colors').on('select2:unselect', function(e) {
+                var data = e.params.data;
+                $(this).find('option[value="' + data.id + '"]').prop('disabled', false); // Habilita a opção novamente no dropdown
+                $(this).trigger('change.select2'); // Atualiza o select2
+            });
+        });
+    </script>
+
+</body>
+</html>

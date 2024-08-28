@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@100;400&display=swap');
+        
+        #container {
+            width: 200px;
+            height: 125px;
+            margin: auto;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+        }
+
+        .loading-title {
+            font-size: 20px;
+            font-family: 'Poppins', sans-serif;
+            font-weight: bold;
+            padding-bottom: 15px;
+            color: #000000;
+        }
+
+        .loader-wrapper {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin-right: 50px;
+        }
+
+        .dots::after {
+            content: '.';
+            animation: dots 1.5s steps(4, end) infinite;
+        }
+
+        @keyframes dots {
+            0% {
+                content: '';
+            }
+            25% {
+                content: '.';
+            }
+            50% {
+                content: '..';
+            }
+            75% {
+                content: '...';
+            }
+            100% {
+                content: '';
+            }
+        }
+
+        .loading-circle {
+            display: block;
+            border-left: 5px solid;
+            border-top-left-radius: 100%;
+            border-top: 5px solid;
+            margin: 5px;
+            animation-name: Loader_611;
+            animation-duration: 1500ms;
+            animation-timing-function: linear;
+            animation-delay: 0s;
+            animation-iteration-count: infinite;
+            animation-direction: normal;
+            animation-fill-mode: forwards;
+        }
+
+        .sp1 {
+            border-left-color: #001aff;
+            border-top-color: #001aff;
+            width: 40px;
+            height: 40px;
+        }
+
+        .sp2 {
+            border-left-color: #daa700;
+            border-top-color: #daa700;
+            width: 30px;
+            height: 30px;
+        }
+
+        .sp3 {
+            width: 20px;
+            height: 20px;
+            border-left-color: green;
+            border-top-color: green;
+        }
+
+        @keyframes Loader_611 {
+            0% {
+                transform: rotate(0deg);
+                transform-origin: right bottom;
+            }
+
+            25% {
+                transform: rotate(90deg);
+                transform-origin: right bottom;
+            }
+
+            50% {
+                transform: rotate(180deg);
+                transform-origin: right bottom;
+            }
+
+            75% {
+                transform: rotate(270deg);
+                transform-origin: right bottom;
+            }
+
+            100% {
+                transform: rotate(360deg);
+                transform-origin: right bottom;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div id="container">
+        <label class="loading-title">Processando<span class="dots"></span></label>
+        <div class="loader-wrapper">
+            <span class="loading-circle sp1">
+                <span class="loading-circle sp2">
+                    <span class="loading-circle sp3"></span>
+                </span>
+            </span>
+        </div>
+    </div>
+</body>
+</html>
